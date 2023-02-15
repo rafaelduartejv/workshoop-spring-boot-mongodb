@@ -1,5 +1,6 @@
 package com.rafaelsantos.workshoopmongodb.resources;
 
+import com.rafaelsantos.workshoopmongodb.domain.Post;
 import com.rafaelsantos.workshoopmongodb.domain.User;
 import com.rafaelsantos.workshoopmongodb.dto.UserDTO;
 import com.rafaelsantos.workshoopmongodb.service.UserService;
@@ -52,5 +53,11 @@ public class UserResources {
         obj.setId(id);
         obj = userService.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
