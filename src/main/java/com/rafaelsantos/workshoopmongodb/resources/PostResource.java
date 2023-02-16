@@ -3,6 +3,7 @@ package com.rafaelsantos.workshoopmongodb.resources;
 import com.rafaelsantos.workshoopmongodb.domain.Post;
 import com.rafaelsantos.workshoopmongodb.domain.User;
 import com.rafaelsantos.workshoopmongodb.dto.UserDTO;
+import com.rafaelsantos.workshoopmongodb.resources.util.URL;
 import com.rafaelsantos.workshoopmongodb.service.PostService;
 import com.rafaelsantos.workshoopmongodb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +29,10 @@ public class PostResource {
         return ResponseEntity.ok().body(obj);
     }
 
+    @RequestMapping(value = "/titlesearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text){
+        text = URL.decodeParam(text);
+        List<Post> list = postService.findByTitle(text);
+        return ResponseEntity.ok().body(list);
+    }
 }
